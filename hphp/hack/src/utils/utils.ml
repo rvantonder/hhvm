@@ -175,9 +175,9 @@ let try_finally ~f ~(finally: unit -> unit) =
 let with_context ~enter ~exit ~do_ =
   enter ();
   let result = try do_ () with e ->
-    exit ();
+    let _ = exit () in
     raise e in
-  exit ();
+  let _ = exit () in
   result
 
 (* We run with exception backtraces turned off for performance reasons. But for
